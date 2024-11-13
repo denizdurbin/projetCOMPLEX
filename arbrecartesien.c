@@ -93,6 +93,71 @@ noeud_t* getfilsgauche(arbre_t* arbre){
         }
     }
 }
+
+
+void printinfixe(arbre_t* arbre){
+    
+    if(estvidearbre(arbre)){
+        return;  
+    }
+    noeud_t* noeud = getracine(arbre);
+    printf("[ ");
+    noeudinfixe(noeud);
+    printf("]\n");
+}
+void noeudinfixe(noeud_t* noeud){
+    if(noeud->filsgauche != NULL){
+        noeudinfixe(noeud->filsgauche);
+    }
+    printf("%s ", noeud->etiquette);
+    if(noeud->filsdroit != NULL){
+        noeudinfixe(noeud->filsdroit);
+    }
+}
+
+void printpostfixe(arbre_t* arbre){
+    
+    if(estvidearbre(arbre)){
+        return;  
+    }
+    noeud_t* noeud = getracine(arbre);
+    printf("[ ");
+    noeudpostfixe(noeud);
+    printf("]\n");
+}
+void noeudpostfixe(noeud_t* noeud){
+    if(noeud->filsgauche != NULL){
+        noeudpostfixe(noeud->filsgauche);
+    }
+    if(noeud->filsdroit != NULL){
+        noeudpostfixe(noeud->filsdroit);
+    }
+
+    printf("%s ", noeud->etiquette);
+ 
+}
+
+void printprefixe(arbre_t* arbre){
+    
+    if(estvidearbre(arbre)){
+        return;  
+    }
+    noeud_t* noeud = getracine(arbre);
+    printf("[ ");
+    noeudprefixe(noeud);
+    printf("]\n");
+}
+void noeudprefixe(noeud_t* noeud){
+    printf("%s ", noeud->etiquette);
+    if(noeud->filsgauche != NULL){
+        noeudprefixe(noeud->filsgauche);
+    }
+
+    if(noeud->filsdroit != NULL){
+        noeudprefixe(noeud->filsdroit);
+    }
+}
+
 void freearbre(arbre_t* arbre){
     noeud_t* noeud = getracine(arbre);
     freenoeud(noeud);

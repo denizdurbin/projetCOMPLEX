@@ -16,6 +16,9 @@ typedef noeud_t* arbre_t;
 noeud_t* creernoeud(char* etiquette, int cle);
 void freenoeud(noeud_t* noeud);
 void printnoeud(noeud_t* noeud);
+void noeudinfixe(noeud_t* noeud);
+void noeudpostfixe(noeud_t* noeud);
+void noeudprefixe(noeud_t* noeud);
 
 
 //FONCTIONS SUR LES ARBRES
@@ -27,7 +30,7 @@ void freearbre(arbre_t* arbre);
 arbre_t* initarbre(noeud_t* noeud);
 noeud_t* getracine (arbre_t* arbre);
 void printinfixe(arbre_t* arbre);
-void printsuffixe(arbre_t* arbre);
+void printpostfixe(arbre_t* arbre);
 void printprefixe(arbre_t* arbre);
 
 #endif

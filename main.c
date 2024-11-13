@@ -32,8 +32,9 @@ int main(){
     F->filsdroit = G;
     printnoeud(getfilsgauche(arbre));
     printnoeud(getfilsdroit(arbre));
-    printf("%s \n", E->filsdroit->etiquette);
-    printf("%s \n", I->filsdroit->etiquette);
+    printinfixe(arbre);
+    printpostfixe(arbre);
+    printprefixe(arbre);
     freearbre(arbre);
     
 }
