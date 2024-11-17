@@ -2,32 +2,40 @@
 CC = gcc
 CFLAGS = -Wall -g
 
-# Files
-SRCS = main.c arbrecartesien.c
-OBJS = $(SRCS:.c=.o)
+# Source and header files
+SRCS = arbrecartesien.c
 DEPS = arbrecartesien.h
 
-# Output executable
-EXEC = main
+# Executable names
+EXECS = main ex1e ex3d ex4d
 
 # Default target
-all: $(EXEC)
+all: $(EXECS)
 
 # Linking
-$(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS)
+main: main.o arbrecartesien.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+ex1e: ex1e.o arbrecartesien.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+ex3d: ex3d.o arbrecartesien.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+ex4d: ex4d.o arbrecartesien.o
+	$(CC) $(CFLAGS) -o $@ $^
 
 # Compile source files into object files
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean object files and the executable
+# Clean object files and the executables
 clean:
-	rm -f $(OBJS) $(EXEC)
+	rm -f *.o $(EXECS)
 
-# Run the program with Valgrind
-valgrind: $(EXEC)
-	valgrind --leak-check=full --track-origins=yes ./$(EXEC)
+# Run the main program with Valgrind
+valgrind: main
+	valgrind --leak-check=full --track-origins=yes ./main
 
 # Phony targets
 .PHONY: all clean valgrind
