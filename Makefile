@@ -7,7 +7,7 @@ SRCS = arbrecartesien.c
 DEPS = arbrecartesien.h
 
 # Executable names
-EXECS = main ex1e ex3d ex4d
+EXECS = main ex1e ex3d ex4d randomtest
 
 # Default target
 all: $(EXECS)
@@ -23,6 +23,9 @@ ex3d: ex3d.o arbrecartesien.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 ex4d: ex4d.o arbrecartesien.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+randomtest: randomtest.o arbrecartesien.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 %.o: %.c $(DEPS)

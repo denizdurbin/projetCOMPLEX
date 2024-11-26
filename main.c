@@ -60,6 +60,8 @@ int main(){
         printf("Cle non trouvee.\n");
     }
     
+    arbre_t* arbre2 = initarbre(NULL);
+    insertionarbre(arbre2, creernoeud("A", 5));
     freearbre(arbre, 1);
     return 0;
 }

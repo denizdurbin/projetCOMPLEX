@@ -4,7 +4,7 @@
 //STRUCTS
 typedef struct _noeudCartesien {
         char* cle;
-        int priorite;
+        double priorite;
         struct _noeudCartesien* filsgauche;
         struct _noeudCartesien* filsdroit;
 } noeud_t;
@@ -18,7 +18,7 @@ typedef enum {
 } Parcours;
 
 //FONCTIONS SUR LES NOEUDS
-noeud_t* creernoeud(char* cle, int priorite);
+noeud_t* creernoeud(char* cle, double priorite);
 void freenoeud(noeud_t* noeud);
 void printnoeud(noeud_t* noeud);
 void parcourir(noeud_t* noeud, Parcours enumParcours);

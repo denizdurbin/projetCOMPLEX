@@ -10,7 +10,7 @@
  *@param priorite : La priorite du noeud a creer, exemple : 1
  *@return res : Le noeud cree
  */
-noeud_t* creernoeud(char* cle, int priorite){
+noeud_t* creernoeud(char* cle, double priorite){
     noeud_t* res = (noeud_t*)malloc(sizeof(noeud_t));
     if(res == NULL){
         printf("Erreur: creernoeud(), erreur d'allocation de memoire.\n");
@@ -45,7 +45,7 @@ void freenoeud(noeud_t* noeud) {
  *@param noeud : Le noeud a afficher
  */
 void printnoeud(noeud_t* noeud){
-    printf("Noeud %s : %d \n", noeud->cle, noeud->priorite);
+    printf("Noeud %s : %f \n", noeud->cle, noeud->priorite);
 }
 
 /**
@@ -115,19 +115,19 @@ void parcourir(noeud_t* noeud, Parcours type) {
     }
 
     if (type == PREFIXE) {
-        printf("(%s, %d) ", noeud->cle, noeud->priorite);
+        printf("(%s, %f) ", noeud->cle, noeud->priorite);
     }
 
     parcourir(noeud->filsgauche, type);
 
     if (type == INFIXE) {
-        printf("(%s, %d) ", noeud->cle, noeud->priorite);
+        printf("(%s, %f) ", noeud->cle, noeud->priorite);
     }
 
     parcourir(noeud->filsdroit, type);
 
     if (type == POSTFIXE) {
-        printf("(%s, %d) ", noeud->cle, noeud->priorite);
+        printf("(%s, %f) ", noeud->cle, noeud->priorite);
     }
 }
 
