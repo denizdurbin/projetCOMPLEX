@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "arbrecartesien.h"
 
 int main(){
@@ -24,10 +25,16 @@ int main(){
     insertionarbre(arbre, I);
 
     suppressionarbre(arbre, 'A');
-    suppressionarbre(arbre, 'B');
+    printparcours(arbre, INFIXE);
+    suppressionarbre(arbre, 'J');
+    printparcours(arbre, INFIXE);
+       
     suppressionarbre(arbre, 'H');
-    printparniveau(arbre, 0);
+    printparcours(arbre, INFIXE);
+    
+    
 
-    freearbre(arbre);
+    freearbre(arbre,1);
+
     return 0;
 }

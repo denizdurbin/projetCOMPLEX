@@ -11,28 +11,30 @@ typedef struct _noeudCartesien {
 
 typedef noeud_t* arbre_t;
 
+typedef enum {
+        INFIXE,
+        PREFIXE,
+        POSTFIXE
+} Parcours;
 
 //FONCTIONS SUR LES NOEUDS
 noeud_t* creernoeud(char* cle, int priorite);
 void freenoeud(noeud_t* noeud);
 void printnoeud(noeud_t* noeud);
-void noeudinfixe(noeud_t* noeud);
-void noeudpostfixe(noeud_t* noeud);
-void noeudprefixe(noeud_t* noeud);
+void parcourir(noeud_t* noeud, Parcours enumParcours);
 noeud_t* rotationgauche(noeud_t* noeud);
 noeud_t* rotationdroite(noeud_t* noeud);
 
 //FONCTIONS SUR LES ARBRES
-arbre_t* creerarbre();
+arbre_t* initarbre(noeud_t* noeud);
 int estvidearbre(arbre_t* arbre);
 noeud_t* getfilsdroit(arbre_t* arbre);
 noeud_t* getfilsgauche(arbre_t* arbre);
-void freearbre(arbre_t* arbre);
-arbre_t* initarbre(noeud_t* noeud);
+void freearbre(arbre_t* arbre, int is_racine);
 noeud_t* getracine (arbre_t* arbre);
-void printinfixe(arbre_t* arbre);
-void printpostfixe(arbre_t* arbre);
-void printprefixe(arbre_t* arbre);
+arbre_t* getfilsgauchearbre(arbre_t* arbre);
+arbre_t* getfilsdroitarbre(arbre_t* arbre);
+void printparcours(arbre_t* arbre, Parcours enumParcours);
 void printparniveau(arbre_t* arbre, int niveau);
 noeud_t* recherchearbre(arbre_t* arbre, char cle);
 void insertionarbre(arbre_t* arbre, noeud_t* noeud);

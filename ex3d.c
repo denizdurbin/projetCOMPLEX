@@ -22,9 +22,9 @@ void ordre1(){
     insertionarbre(arbre, H);
     insertionarbre(arbre, I);
     insertionarbre(arbre, J);
-    printinfixe(arbre);
+    printparcours(arbre, INFIXE);
 
-    freearbre(arbre);
+    freearbre(arbre,1);
 }
 
 void ordre2(){
@@ -48,9 +48,10 @@ void ordre2(){
     insertionarbre(arbre, J);
     insertionarbre(arbre, I);
     insertionarbre(arbre, E);
-    printinfixe(arbre);
+    printparcours(arbre, INFIXE);
 
-    freearbre(arbre);
+    freearbre(arbre, 1);
+
 }
 
 void ordre3(){
@@ -74,9 +75,9 @@ void ordre3(){
     insertionarbre(arbre, J);
     insertionarbre(arbre, A);
     insertionarbre(arbre, I);
-    printinfixe(arbre);
+    printparcours(arbre, INFIXE);
 
-    freearbre(arbre);
+    freearbre(arbre,1);
 }
 
 int main(){

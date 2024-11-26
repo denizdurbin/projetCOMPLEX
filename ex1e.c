@@ -25,11 +25,13 @@ int main(){
     B->filsdroit = C;
     E->filsdroit = F;
     F->filsdroit = G;
-    printnoeud(getfilsgauche(arbre));
-    printnoeud(getfilsdroit(arbre));
-    printinfixe(arbre);
-    printpostfixe(arbre);
-    printprefixe(arbre);
+
+    printf("Parcours prefixe : \n");
+    printparcours(arbre, PREFIXE);
+    printf("Parcours infixe : \n");
+    printparcours(arbre, INFIXE);
+    printf("Parcours postfixe : \n");
+    printparcours(arbre, POSTFIXE);
 
     //Test de la recherche
     /*
@@ -59,8 +61,7 @@ int main(){
         printf("Cle non trouvee.\n");
     }
     */  
-    freearbre(arbre);
-
+    freearbre(arbre, 1);
 
     return 0;
 }
