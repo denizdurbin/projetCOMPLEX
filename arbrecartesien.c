@@ -292,10 +292,12 @@ void suppressionarbre(arbre_t* arbre, char cle){
 
     noeud_t* racine = getracine(arbre);
     if(racine->cle[0] == cle){
+        //Si le noeud n'a pas d'enfants, on le supprime
         if(racine->filsgauche == NULL && racine->filsdroit == NULL){
             freenoeud(racine);
             *arbre = NULL;
         }
+        //AVec un seul enfant, on peut simplement le remplacer
         else if(racine->filsgauche == NULL){
             noeud_t* temp = racine->filsdroit;
             freenoeud(racine);
@@ -307,6 +309,7 @@ void suppressionarbre(arbre_t* arbre, char cle){
             *arbre = temp;
         }
         else{
+            //Sinon, rotations effectuees (gauche ou droit selon les priorites)
             if(racine->filsgauche->priorite < racine->filsdroit->priorite){
                 *arbre = rotationdroite(racine);
                 suppressionarbre(getfilsdroitarbre(arbre), cle);
@@ -317,6 +320,7 @@ void suppressionarbre(arbre_t* arbre, char cle){
             }
         }
     }
+    //Sİnon on bascule dans un de deux sous arbres
     else if(racine->cle[0] < cle){
         suppressionarbre(getfilsdroitarbre(arbre), cle);
     }

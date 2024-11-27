@@ -108,9 +108,9 @@ void test_cartesien(int num_insertions, int iterations) {
     double avg_height = total_height / (double)iterations;
     double avg_fils_unique = total_fils_unique / (double)iterations;
 
-    printf("Overall Max Height: %d\n", overall_max_height);
-    printf("Overall Average Height: %.2f\n", avg_height);
-    printf("Overall Average Number of Nodes with One Child: %.2f\n", avg_fils_unique);
+    printf("Hauteur Maximale: %d\n", overall_max_height);
+    printf("Hauteur Globale: %.2f\n", avg_height);
+    printf("Nombre moyen global de noeuds avec un seul enfant: %.2f\n", avg_fils_unique);
 }
 
 /**
@@ -155,26 +155,26 @@ void test_ABR(int num_insertions, int iterations) {
     double avg_height = total_height / (double)iterations;
     double avg_fils_unique = total_fils_unique / (double)iterations;
 
-    printf("Overall Max Height: %d\n", overall_max_height);
-    printf("Overall Average Height: %.2f\n", avg_height);
-    printf("Overall Average Number of Nodes with One Child: %.2f\n", avg_fils_unique);
+    printf("Hauteur Maximale: %d\n", overall_max_height);
+    printf("Hauteur Glovale: %.2f\n", avg_height);
+    printf("Nombre moyen global de noeuds avec un seul enfant: %.2f\n", avg_fils_unique);
 }
 
 
 int main() {
-    printf("\n--- Batch 1, 10 Cles, 10000 Iterations ---\n");
+    printf("\n--- Lot 1, 10 Cles, 10000 Iterations ---\n");
     printf("Cartesien:\n");
     test_cartesien(10, 10000);
     printf("ABR:\n");
     test_ABR(10, 1);
 
-    printf("\n--- Batch 2, 50 Cles, 10000 Iterations ---\n");
+    printf("\n--- Lot 2, 50 Cles, 10000 Iterations ---\n");
     printf("Cartesien:\n");
     test_cartesien(50, 10000);
     printf("ABR:\n");
     test_ABR(50, 1);
 
-    printf("\n--- Batch 3, 95 Cles, 10000 Iterations ---\n");
+    printf("\n--- Lot 3, 95 Cles, 10000 Iterations ---\n");
     printf("Cartesien:\n");
     test_cartesien(95, 10000);
     printf("ABR:\n");
