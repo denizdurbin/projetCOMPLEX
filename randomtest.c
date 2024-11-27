@@ -3,15 +3,43 @@
 #include <time.h>
 #include "arbrecartesien.h"
 
+
+/**
+ *Calcul de la hauteur d'un noeud
+ *@param node : Le noeud dont on veut calculer la hauteur
+ *@return La hauteur du noeud
+ */
 int height(noeud_t* node) {
-    if (node == NULL) return 0;
+    if (node == NULL){
+        return 0;
+        }
     int left_height = height(node->filsgauche);
     int right_height = height(node->filsdroit);
     return 1 + (left_height > right_height ? left_height : right_height);
 }
 
+/*
+ *Parcourt un arbre et compte le nombre de noeuds ayant un seul fils
+ *@param node : Le noeud a partir duquel on veut commencer le parcourt
+ *@return Le nombre de noeuds ayant un seul fils 
+ */
+
+int nbfilsunique(noeud_t* node) {
+    if (node == NULL) {
+        return 0;
+    }
+    int left_filsunique = nbfilsunique(node->filsgauche);
+    int right_filsunique = nbfilsunique(node->filsdroit);
+  
+    if ((node->filsgauche != NULL && node->filsdroit == NULL) || 
+        (node->filsgauche == NULL && node->filsdroit != NULL)) {
+        return 1 + left_filsunique + right_filsunique;
+    }
+    
+    return left_filsunique + right_filsunique;
+}
 /**
- *Insertion d'un noeud dans un arbre
+ *Insertion d'un noeud dans un arbre binaire de recherce
  *@param arbre : L'arbre dans lequel on veut inserer
  *@param noeud : Le noeud a inserer
  */
@@ -38,110 +66,98 @@ void insertionABR(arbre_t* arbre, noeud_t* noeud) {
     }
 }
 
-// Fisher-Yates shuffle to randomize the keys
-void shuffle_keys(char* keys, int num_keys) {
-    for (int i = num_keys - 1; i > 0; i--) {
-        int j = rand() % (i + 1);  // Random index from 0 to i
-        char temp = keys[i];
-        keys[i] = keys[j];
-        keys[j] = temp;
-    }
-}
+/**
+ *Test de profondeur max et moyen d'un arbre cartesien
+ *@param num_insertions : Nombre d'insertions a effectuer
+ *@param iterations : Nombre d'iterations
+ */
 void test_cartesien(int num_insertions, int iterations) {
     srand(time(NULL));
     int overall_max_height = 0;
     int total_height = 0;
-    int total_batches = 0;
-
+    int total_fils_unique = 0;
+    //compteurs pour nos metriques (profondeur max, profondeur moyenne, nombre de noeuds avec un seul fils)
     for (int iter = 0; iter < iterations; iter++) {
-        for (int batch = 0; batch < num_insertions; batch++) {
-            // Initialize the array of keys
-            char keys[95];
-            for (char c = '!'; c <= '~'; c++) {
-                keys[c - '!'] = c;
-            }
+        
+        char cle1[1] = {'!'};
+        double priorite_initiale = (double)rand() / RAND_MAX;
+        noeud_t* noeud = creernoeud(cle1, priorite_initiale);
+        arbre_t* arbre = initarbre(noeud);
 
-            // Shuffle all 95 keys to randomize the order
-            shuffle_keys(keys, 95);
-
-            // The first key is chosen from the shuffled keys
-            char cle1[1] = {keys[0]};  // Take the first shuffled key
-            double priorite_initiale = (double)rand() / RAND_MAX; 
-            noeud_t* noeud = creernoeud(cle1, priorite_initiale);
-            arbre_t* arbre = initarbre(noeud);
-
-            // Insert the rest of the keys in the shuffled order
-            for (int i = 1; i < 95; i++) {  // Start from 1 since cle1 is already inserted
-                double priorite = (double)rand() / RAND_MAX; 
-                char cle[1] = {keys[i]}; 
-                noeud_t* noeud = creernoeud(cle, priorite);
-                insertionarbre(arbre, noeud);
-            }
-
-            // Calculate the height of the tree
-            int h = height(getracine(arbre));
-            total_height += h;
-            if (h > overall_max_height) {
-                overall_max_height = h;
-            }
-
-            freearbre(arbre, 1);
-            total_batches++;
+        //L'arbre le plus grand possible avec les char ASCII imprimables
+        int count = 1; 
+        for (char c = '!'; c <= '~' && count < num_insertions; c++, count++) {
+            double priorite = (double)rand() / RAND_MAX;
+            char cle[1] = {c};
+            noeud_t* noeud = creernoeud(cle, priorite);
+            insertionarbre(arbre, noeud);
         }
+
+        
+        int h = height(getracine(arbre));
+        total_height += h;
+        total_fils_unique += nbfilsunique(getracine(arbre));
+        if (h > overall_max_height) {
+            overall_max_height = h;
+        }
+
+        
+        freearbre(arbre, 1);
     }
 
-    double avg_height = total_height / (double)total_batches;
+    double avg_height = total_height / (double)iterations;
+    double avg_fils_unique = total_fils_unique / (double)iterations;
 
     printf("Overall Max Height: %d\n", overall_max_height);
     printf("Overall Average Height: %.2f\n", avg_height);
+    printf("Overall Average Number of Nodes with One Child: %.2f\n", avg_fils_unique);
 }
 
-
+/**
+ *Test de profondeur max et moyen d'un arbre binaire de recherche
+ *@param num_insertions : Nombre d'insertions a effectuer
+ *@param iterations : Nombre d'iterations
+ */
 void test_ABR(int num_insertions, int iterations) {
     srand(time(NULL));
     int overall_max_height = 0;
     int total_height = 0;
-    int total_batches = 0;
+    int total_fils_unique = 0;
 
     for (int iter = 0; iter < iterations; iter++) {
-        for (int batch = 0; batch < num_insertions; batch++) {
-            // Initialize the array of keys
-            char keys[95];
-            for (char c = '!'; c <= '~'; c++) {
-                keys[c - '!'] = c;
-            }
-
-            // Shuffle all 95 keys to randomize the order
-            shuffle_keys(keys, 95);
-
-            // The first key is chosen from the shuffled keys
-            char cle1[1] = {keys[0]};  // Take the first shuffled key
-            noeud_t* noeud = creernoeud(cle1, 0);
-            arbre_t* arbre = initarbre(noeud);
+        
+        char cle1[1] = {'!'};
+        double priorite_initiale = (double)rand() / RAND_MAX;
+        noeud_t* noeud = creernoeud(cle1, priorite_initiale);
+        arbre_t* arbre = initarbre(noeud);
 
         
-            for (int i = 1; i < 95; i++) {  
-                char cle[1] = {keys[i]}; 
-                noeud_t* noeud = creernoeud(cle, 0);
-                insertionABR(arbre, noeud);
-            }
-
-            // Calculate the height of the tree
-            int h = height(getracine(arbre));
-            total_height += h;
-            if (h > overall_max_height) {
-                overall_max_height = h;
-            }
-
-            freearbre(arbre, 1);
-            total_batches++;
+        int count = 1; 
+        for (char c = '!'; c <= '~' && count < num_insertions; c++, count++) {
+            double priorite = (double)rand() / RAND_MAX;
+            char cle[1] = {c};
+            noeud_t* noeud = creernoeud(cle, priorite);
+            insertionABR(arbre, noeud);
         }
+
+        
+        int h = height(getracine(arbre));
+     
+        total_height += h;
+        total_fils_unique += nbfilsunique(getracine(arbre));
+        if (h > overall_max_height) {
+            overall_max_height = h;
+        }
+
+        freearbre(arbre, 1);
     }
 
-    double avg_height = total_height / (double)total_batches;
+    double avg_height = total_height / (double)iterations;
+    double avg_fils_unique = total_fils_unique / (double)iterations;
 
     printf("Overall Max Height: %d\n", overall_max_height);
     printf("Overall Average Height: %.2f\n", avg_height);
+    printf("Overall Average Number of Nodes with One Child: %.2f\n", avg_fils_unique);
 }
 
 
@@ -150,19 +166,19 @@ int main() {
     printf("Cartesien:\n");
     test_cartesien(10, 10000);
     printf("ABR:\n");
-    test_ABR(10, 10000);
+    test_ABR(10, 1);
 
     printf("\n--- Batch 2, 50 Cles, 10000 Iterations ---\n");
     printf("Cartesien:\n");
     test_cartesien(50, 10000);
     printf("ABR:\n");
-    test_ABR(50, 10000);
+    test_ABR(50, 1);
 
     printf("\n--- Batch 3, 95 Cles, 10000 Iterations ---\n");
     printf("Cartesien:\n");
     test_cartesien(95, 10000);
     printf("ABR:\n");
-    test_ABR(95, 10000);
+    test_ABR(95, 1);
 
     return 0;
 }

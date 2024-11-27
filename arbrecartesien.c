@@ -18,9 +18,6 @@ noeud_t* creernoeud(char* cle, double priorite){
     }
     res->cle = strdup(cle);
     if (res->cle == NULL) {
-        printf("Erreur: creernoeud(), erreur d'allocation de memoire pour cle.\n"); 
-        free(res);
-        exit(1);
     }
     res->priorite = priorite;
     res->filsgauche = NULL;
@@ -105,7 +102,7 @@ arbre_t* getfilsdroitarbre(arbre_t* arbre) {
 }
 
 /**
- *Parcours l'arbre selon un type de parcours
+ *Parcourt l'arbre selon un type de parcours
  *@param noeud : Le noeud a parcourir
  *@param type : Le type de parcours a effectuer(PREFIXE, INFIXE, POSTFIXE)
  */
@@ -115,19 +112,19 @@ void parcourir(noeud_t* noeud, Parcours type) {
     }
 
     if (type == PREFIXE) {
-        printf("(%s, %f) ", noeud->cle, noeud->priorite);
+        printf("(%s, %.2f) ", noeud->cle, noeud->priorite);
     }
 
     parcourir(noeud->filsgauche, type);
 
     if (type == INFIXE) {
-        printf("(%s, %f) ", noeud->cle, noeud->priorite);
+        printf("(%s, %.2f) ", noeud->cle, noeud->priorite);
     }
 
     parcourir(noeud->filsdroit, type);
 
     if (type == POSTFIXE) {
-        printf("(%s, %f) ", noeud->cle, noeud->priorite);
+        printf("(%s, %.2f) ", noeud->cle, noeud->priorite);
     }
 }
 
